@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>User edit form</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+</head>
+<body>
+
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <h5 class="my-0 mr-md-auto font-weight-normal">IEManager</h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+
+        <!--div> <th:if="${user.isUser()}">
+            <a class="p-2 text-dark" href="/aboutus">О нас</a>
+            <a class="p-2 text-dark" href="/expenses">Расходы</a>
+            <a class="p-2 text-dark" href="/income">Доходы</a>
+            <a class="p-2 text-dark" href="/categories">Категории</a>
+            <a class="p-2 text-dark" href="/hello">Личный кабинет</a>
+            <
+            <a class="p-2 text-dark" th:href="@{/category(userId=${user.getId()})}">Категории</a> >
+        </div-->
+
+
+        <a class="p-2 text-dark" href="/users">Список пользователей</a>
+        <a class="p-2 text-dark" href="/hello">Личный кабинет</a>
+
+    </nav>
+
+    <form th:action="@{/logout}" method="post">
+        <input class="btn btn-outline-primary" type="submit" value="Выйти"/>
+    </form>
+</div>
+
+<h1 th:inline="text" align="center">Вы находитесь в меню редактирования пользователя с именем пользователя (login): [[${user.getUserLogin()}]]</h1>
+<br>
+<form th:action="@{/users}" style="width:300px; margin: auto" th:method="post">
+    <p>Имя пользователя</p>
+    <label>
+        <input type="text" name="name" th:value="${user.getUserName()}" class="form-control">
+    </label>
+    <p>Почта пользователя</p>
+    <label>
+        <input type="text" name="mail" th:value="${user.getMail()}" class="form-control">
+    </label>
+    <input type="hidden" name="userId" th:value="${user.getId()}">
+    <p>Роли пользователя</p>
+    <tr th:each="role : ${roles}" class="form-control">
+        <div>
+            <label><input type="checkbox" th:name = "${role}"> <a th:text="${role}"></a> </label>
+        </div>
+    </tr>
+<button type="submit">Сохранить</button>
+</form>
+
+</body>
+</html>

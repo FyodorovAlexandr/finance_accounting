@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Personal page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"-->
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript"
+            src="https://www.gstatic.com/charts/loader.js"></script>
+    <link rel="stylesheet" href="css/style2.css">
+
+
+</head>
+<body>
+
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <h5 class="my-0 mr-md-auto font-weight-normal">IEManager</h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+
+        <div th:if="${user.isUser()}">
+            <a class="p-2 text-dark" href="/aboutus">О нас</a>
+            <a class="p-2 text-dark" href="/expenses">Расходы</a>
+            <a class="p-2 text-dark" href="/incomes">Доходы</a>
+            <a class="p-2 text-dark" href="/categories">Категории</a>
+            <a class="p-2 text-dark" href="/hello">Личный кабинет</a>
+            <!--
+            <a class="p-2 text-dark" th:href="@{/category(userId=${user.getId()})}">Категории</a> -->
+        </div>
+
+        <div th:if="${user.isAdmin()}">
+            <a class="p-2 text-dark" href="/users">Список пользователей</a>
+            <a class="p-2 text-dark" href="/hello">Личный кабинет</a>
+        </div>
+
+    </nav>
+
+    <form th:action="@{/logout}" method="post">
+    <input class="btn btn-outline-primary" type="submit" value="Выйти"/>
+    </form>
+</div>
+
+<article class="article_main">
+
+
+
+<h1 th:inline="text" align="center">Привет, [[${#httpServletRequest.remoteUser}]]!</h1>
+<br>
+
+
+
+
+<br>
+
+<h1 th:inline="text" align="center"> Воу, Воу, твой баланс расходы-доходы за этот месяц: <strong>[[${balance}]]</strong></h1>
+<!--a href="/map">жми что бы проверить </a-->
+
+
+
+<br>
+
+
+<table class="columns" align="center">
+
+    <thead align="center">
+    <th>Затраты за текущий месяц</th>
+    <th>Доходы за текущий месяц</th>
+    </thead>
+    <tr>
+        <td><div id="expenses_chart" style="width: 600px; height: 350px;"></div></td>
+        <td><div id="incomes_chart" style="width: 600px; height: 350px;"></div></td>
+    </tr>
+</table>
+
+
+<!--div align="center" style="width: 1000px;">
+    <h2>Расходы за текущий месяц</h2>
+    <div id="chart_div"></div>
+    <div id="expenses_chart" style="width: 900px; height: 500px;"></div>
+</div-->
+
+<script th:inline="javascript">
+    var real_data1 = /*[[${data_expenses}]]*/'noValue';
+    var real_data2 = /*[[${data_incomes}]]*/'noValue';
+
+    $(document).ready(function() {
+        google.charts.load('current', {
+            packages : [ 'corechart', 'bar' ]
+        });
+
+        google.charts.setOnLoadCallback(drawPieChart1);
+        google.charts.setOnLoadCallback(drawPieChart2);
+
+    });
+
+    function drawPieChart1() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Затрата');
+        data.addColumn('number', 'Сумма');
+        Object.keys(real_data1).forEach(function(key) {
+            data.addRow([ key, real_data1[key] ]);
+        });
+        var options = {
+            title : ''
+        };
+        var chart = new google.visualization.PieChart(document
+            .getElementById('expenses_chart'));
+        chart.draw(data, options);
+    }
+    function drawPieChart2() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Доходы');
+        data.addColumn('number', 'Сумма');
+        Object.keys(real_data2).forEach(function(key) {
+            data.addRow([ key, real_data2[key] ]);
+        });
+        var options = {
+            title : ''
+        };
+        var chart = new google.visualization.PieChart(document
+            .getElementById('incomes_chart'));
+        chart.draw(data, options);
+    }
+</script>
+
+
+
+
+<!--a href="/users"> Ссылка на роли юзеров </a-->
+<!--
+   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+-->
+
+</article>
+</body>
+</html>

@@ -1,0 +1,8 @@
+
+
+.article_main {
+    background-image: url("../images/main_page.jpeg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}

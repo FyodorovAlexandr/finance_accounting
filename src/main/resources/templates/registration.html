@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+  <meta charset="utf-8">
+  <title>Awesome application</title>
+
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <article class="article article_bluebg article_second">
+    <h2 class="white">Здорово, ты сделал первый шаг!</h2>
+    <p class="white">Теперь осталось заполнить несложную форму и ты станешь на ступень ближе к Уоренну Баффету! :)</p>
+    <form th:action="@{/registration}" method="post" class="form">
+      <label>
+        <input type="text" class="form_input" name="username" placeholder="Имя">
+      </label>
+      <label>
+        <input type="text" class="form_input" name="login" placeholder="Логин">
+      </label>
+      <label>
+        <input type="email" class="form_input" name="email" placeholder="E-mail">
+      </label>
+      <label>
+        <input type="password" class="form_input" name="password" placeholder="Пароль">
+      </label>
+      <button class="form_button" type="submit">Зарегистрироваться!</button>
+    </form>
+    <br>
+    <br>
+    <p class="white">Что-то передумал, хочу на <a href="/main" class="white"> главную страницу</a> </p>
+
+  </article>
+
+
+</body>
+</html>
